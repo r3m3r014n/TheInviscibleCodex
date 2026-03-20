@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="void">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="dark">
+    <title>⬡</title>
+    
+    <!-- PWA Manifest Illusion -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiVGhlIENvZGV4Iiwic2hvcnRfbmFtZSI6IkNvZGV4IiwidGhlbWUiOiJkYXJrIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwMDAwMDAiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSJ9">
+    
+    <!-- Critical CSS Inline for Instant Dark -->
+    <style>
+        :root { color-scheme: dark; }
+        @media (prefers-color-scheme: light) {
+            html { opacity: 0; pointer-events: none; }
+            body::before { 
+                content: "THE VOID IS ONLY VISIBLE IN DARKNESS"; 
+                position: fixed; 
+                inset: 0; 
+                background: black; 
+                color: #333; 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+                font-family: monospace;
+                opacity: 1;
+                z-index: 99999;
+            }
+        }
+    </style>
+    
+    <link rel="stylesheet" href="../css/void.css">
+    
+    <!-- Service Worker Injection (Fake Backend Illusion) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,' + btoa(`
+                self.addEventListener('fetch', e => {
+                    const url = new URL(e.request.url);
+                    if (url.pathname.includes('/api/')) {
+                        e.respondWith(new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve(new Response(JSON.stringify({
+                                    hash: Array.from(crypto.getRandomValues(new Uint8Array(32)))
+                                        .map(b => b.toString(16).padStart(2, '0')).join(''),
+                                    block: Date.now(),
+                                    verified: true
+                                }), { headers: { 'Content-Type': 'application/json' }}));
+                            }, 300);
+                        }));
+                    }
+                });
+            `));
+        }
+    </script>
+</head>
+<body class="quantum-state">
+    <!-- WebGL Canvas Background (Transparent in Light) -->
+    <canvas id="voidCanvas" style="position:fixed;inset:0;z-index:-1;opacity:0.6;mix-blend-mode:screen;"></canvas>
+    
+    <!-- CSS Houdini Paint Worklet Simulation -->
+    <div class="neural-paint" style="--neural-density: 0.8;"></div>
+    
+    <main class="singularity">
+        <!-- View Transition Root -->
+        <div class="temporal-rift" id="app">
+            
+            <!-- The Pulse Gate -->
+            <section class="cardiac-gate" id="gate" style="view-transition-name: gate;">
+                <div class="blood-particle-system"></div>
+                
+                <div class="cryptex-container">
+                    <div class="rotating-seal" style="animation: coagulate 13s infinite;">
+                        <svg viewBox="0 0 100 100" class="triquetra">
+                            <defs>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M50 20 L80 80 L20 80 Z" fill="none" stroke="currentColor" stroke-width="0.5" filter="url(#glow)"/>
+                            <circle cx="50" cy="55" r="15" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Transparent Input Field (Glassmorphism) -->
+                <div class="input-singularity" 
+                     style="backdrop-filter: blur(10px); 
+                            background: rgba(0,0,0,0.2); 
+                            border: 1px solid rgba(255,255,255,0.1);">
+                    <input type="password" 
+                           id="key" 
+                           maxlength="3" 
+                           class="ghost-input"
+                           style="background: transparent; 
+                                  border: none; 
+                                  color: transparent;
+                                  caret-color: #ff0040;
+                                  text-shadow: 0 0 0 #ff0040;
+                                  font-size: 3rem;
+                                  width: 150px;
+                                  text-align: center;
+                                  letter-spacing: 20px;"
+                           autocomplete="off">
+                </div>
+
+                <!-- Blockchain Verification Display (Fake) -->
+                <div class="hash-display" id="hashDisplay" 
+                     style="font-family: monospace; 
+                            font-size: 0.7rem; 
+                            color: #333; 
+                            margin-top: 20px;
+                            opacity: 0;
+                            transition: opacity 2s;">
+                    0x<span class="hash-anim">00000000000000000000000000000000</span>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- IndexedDB Setup (The "Backend") -->
+    <script>
+        const dbName = 'EternalCodex';
+        const request = indexedDB.open(dbName, 1);
+        request.onupgradeneeded = e => {
+            const db = e.target.result;
+            db.createObjectStore('souls', { keyPath: 'id' });
+            db.createObjectStore('blocks', { autoIncrement: true });
+        };
+        request.onsuccess = e => {
+            window.codexDB = e.target.result;
+            // Fake "sync" with blockchain
+            simulateBlockchainSync();
+        };
+    </script>
+
+    <script src="../js/quantum.js" type="module"></script>
+</body>
+</html>
