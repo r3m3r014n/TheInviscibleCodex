@@ -1,0 +1,268 @@
+/* THE INVISIBLE CODEX - Only visible in darkness */
+@property --blood-hue {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --void-depth {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+:root {
+    color-scheme: dark only;
+    --void: #000000;
+    --blood: #ff0040;
+    --gold: #ffd700;
+    --glass: rgba(255, 255, 255, 0.03);
+    --neural: rgba(255, 0, 64, 0.1);
+}
+
+/* Force Dark Mode - Invisible in Light */
+@media (prefers-color-scheme: light) {
+    * { opacity: 0 !important; pointer-events: none !important; }
+    html::after {
+        content: "THE VOID REJECTS ILLUMINATION";
+        position: fixed;
+        inset: 0;
+        background: #000;
+        color: #111;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Courier New', monospace;
+        opacity: 1 !important;
+        z-index: 999999;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--void);
+    color: var(--blood);
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    overflow: hidden;
+    /* Glassmorphism base */
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(255,0,64,0.05) 0%, transparent 50%),
+        linear-gradient(to bottom, #000 0%, #0a0a0a 100%);
+    /* Snap scrolling for "snap of elegance" */
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+
+/* WebGL Canvas overlay */
+#voidCanvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Transparent until interaction */
+    opacity: 0.3;
+    transition: opacity 4s;
+}
+
+body:hover #voidCanvas {
+    opacity: 0.8;
+}
+
+/* CSS Houdini Paint API fallback/simulation */
+.neural-paint {
+    position: fixed;
+    inset: 0;
+    background-image: paint(neuralNetwork);
+    opacity: 0.4;
+    z-index: -1;
+    /* Fallback for browsers without Houdini */
+    background: 
+        repeating-radial-gradient(
+            circle at 50% 50%, 
+            transparent 0, 
+            rgba(255,0,64,0.03) 2px, 
+            transparent 4px
+        );
+    background-size: 50px 50px;
+    animation: neuralPulse 20s linear infinite;
+}
+
+@keyframes neuralPulse {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* The Singularity Container */
+.singularity {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    /* Container queries for morphing */
+    container-type: inline-size;
+    container-name: singularity;
+}
+
+/* Cardiac Gate with View Transitions API support */
+.cardiac-gate {
+    width: min(90vw, 600px);
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Glass morphism - transparent */
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 0 1px rgba(255,0,64,0.1),
+        0 0 100px rgba(255,0,64,0.1) inset;
+    scroll-snap-align: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Morphing on hover (container query) */
+@container singularity (min-width: 500px) {
+    .cardiac-gate:hover {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        box-shadow: 
+            0 0 0 2px rgba(255,0,64,0.2),
+            0 0 150px rgba(255,0,64,0.2) inset;
+    }
+}
+
+/* Rotating Seal */
+.rotating-seal {
+    width: 200px;
+    height: 200px;
+    color: var(--blood);
+    opacity: 0.6;
+    animation: coagulate 13s infinite;
+    filter: drop-shadow(0 0 20px rgba(255,0,64,0.5));
+}
+
+@keyframes coagulate {
+    0%, 100% { 
+        transform: rotate(0deg) scale(1); 
+        filter: hue-rotate(0deg) drop-shadow(0 0 10px rgba(255,0,64,0.3));
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.1); 
+        filter: hue-rotate(15deg) drop-shadow(0 0 30px rgba(255,0,64,0.6));
+    }
+}
+
+/* Transparent Input */
+.input-singularity {
+    margin-top: 40px;
+    padding: 20px;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+
+.input-singularity:focus-within {
+    background: rgba(255,0,64,0.05);
+    border-color: rgba(255,0,64,0.3);
+    box-shadow: 0 0 30px rgba(255,0,64,0.1);
+}
+
+.ghost-input {
+    font-family: 'Courier New', monospace;
+    outline: none;
+}
+
+.ghost-input::placeholder {
+    color: transparent;
+}
+
+/* Hash Display (Web3 Illusion) */
+.hash-display {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+.hash-anim {
+    animation: hashScroll 3s linear infinite;
+}
+
+@keyframes hashScroll {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; text-shadow: 0 0 10px #ff0040; }
+    100% { opacity: 0.3; }
+}
+
+/* View Transitions (New Web API) */
+::view-transition-old(gate) {
+    animation: gateExit 0.5s ease;
+}
+
+::view-transition-new(gate) {
+    animation: gateEnter 0.5s ease;
+}
+
+@keyframes gateExit {
+    to { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes gateEnter {
+    from { transform: scale(2) rotate(-360deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* Subgrid for later levels */
+.rite-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: masonry; /* Masonry layout */
+    gap: 1rem;
+}
+
+/* Color Mix (CSS Level 5) */
+.blood-mix {
+    background: color-mix(in srgb, var(--blood) 50%, transparent);
+}
+
+/* Scroll Snap for "Snap" elegance */
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.snap-section {
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+}
+
+/* Dark mode only transparency */
+.transparent-until-dark {
+    background: transparent;
+    color: transparent;
+    text-shadow: 0 0 0 var(--blood);
+}
+
+/* High contrast for accessibility but only in dark */
+@media (prefers-contrast: high) and (prefers-color-scheme: dark) {
+    :root {
+        --blood: #ff0000;
+        --gold: #ffff00;
+    }
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; }
+}
+
